@@ -1,0 +1,93 @@
+{% extends 'home_layout.html' %}
+
+{% block title %}Post{% endblock %}
+
+{% block script %}
+    <meta name="referrer" content="no-referrer" />
+    <script src="{{ url_for('static', filename='scripts/like_post.js') }}"></script>
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}
+
+{% block content %}
+    <div class="single-post">
+        <div class="left-section">
+            <div class="left-col">
+                <a href="{{ url_for('user_profile', user_account=post.user.username) }}">
+                    <img class="profile-picture" src="{{ url_for('static', filename='images/profile_pictures/' + post.user.profile_picture) }}" alt=""> 
+                </a>
+            </div>
+            <div class="right-col">
+                <a href="{{ url_for('user_profile', user_account=post.user.username) }}"><h3 class="user">{{ post.user.username}}<span class="time-posted"> . {{ post.posted_on.strftime('%a') }}</span></h3></a>
+                <div class="text-content">
+                    <p class="post-text-content">{{ post.text_content }}</p>
+                </div>
+                <div class="image-content">
+                    <img src="{{ url_for('static', filename='images/posts/' + post.image_content) }}" alt="image_content">
+                </div>
+
+                <div class="post-modifiers">
+                    <div>
+                        {% if current_user.is_liked(post) %}
+                            {% set like_class = 'fa-heart-liked'%}
+                        {% else %}
+                            {% set like_class = '' %}
+                        {% endif %}
+                        <i class="fa fa-heart-o {{ like_class }}" aria-hidden="true" id="{{ post.id }}"></i>
+                        <span class="like-counter">{{ post.likes }}</span>
+                        <!-- <h5 class="like-btn" id="{{ post.id }}">Like post</h5> -->
+                    </div>
+                    <div>
+                        <i class="fa fa-comment-o" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        {# Check if the post belongs to the current user #}
+                        {% if current_user.username == post.user.username%}
+                            <a href="{{ url_for('delete_post', post_id=post.id) }}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                        {% endif %}
+                    </div>
+                    <div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-section">
+            <h5 class="comment-title">Comments</h5>
+
+            <form action="" method="POST">
+                {{ form.csrf_token }}
+                <input name="postComment" type="text" class="comment-content" placeholder="Comment" style="width: 350px; height: 20px; padding: 5px; margin-top: 15px">
+                <input type="submit" class="post-comment" value="post" style="padding: 6px;">
+            </form>
+
+            {% for comment in post.comments %}
+                <div class="comment-container">
+                    <img class="comment-profile" src="{{ url_for('static', filename='images/profile_pictures/' + Account.query.filter_by(id=comment.account_id).first().profile_picture) }}" alt="">
+                    <div>
+                        <h3>{{ Account.query.filter_by(id=comment.account_id).first().username }}</h3>
+                        <p style="font-size: 16px;">{{ comment.content }}</p>
+
+                        <form action="" method="POST">
+                            {{ form.csrf_token }}
+                            <input name="threadComment" type="text" placeholder="Reply" style="width: 350px; height: 20px; padding: 5px; margin-top: 15px">
+                            <input type="submit" class="comment-reply" value="post" style="padding: 6px;">
+                        </form>
+
+                        {% for thread in comment.thread %}
+                            <div class="comment-thread-container">
+                                <img class="comment-profile" src="{{ url_for('static', filename='images/profile_pictures/' + Account.query.filter_by(id=thread.account_id).first().profile_picture) }}" alt="">
+                                <div>
+                                    <h4 style="margin-left: 5px;">{{ Account.query.filter_by(id=thread.account_id).first().username }}</h4>
+                                    <p style="font-size: 12px; margin-left: 5px;">{{ thread.content }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+{% endblock %}

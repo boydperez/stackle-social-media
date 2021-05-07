@@ -1,0 +1,173 @@
+.top-section {
+    text-align: center;
+}
+
+.top-section > .profile {
+    margin-top: 1.3rem;
+}
+
+.top-section > .profile > img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.top-section > .profile > span {
+    position: absolute;
+    font-size: 0.6rem;
+    margin-top: 80px;
+    margin-left: -25px;
+    color: rgb(125, 125, 194);
+    background-color: white; 
+    padding: 2px 5px;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.top-section > .account-name {
+    margin-top: 0.8rem;
+    font-size: 1.2rem;
+    color: rgb(37, 37, 37);
+    letter-spacing: 1px;
+}
+
+.top-section > .username {
+    margin-top: 0.3rem;
+    font-size: 1.02rem;
+    color: rgb(75, 75, 75);
+}
+.top-section > .username .more {
+    display: inline;
+    position: absolute;
+    margin-left: 8px;
+    line-height: 17px;
+    cursor: pointer;
+}
+.top-section > .username .more span.dot {
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: rgb(66, 66, 66);
+    margin-right: -2.5px;
+}
+.top-section > .username .more-options li {
+    list-style: none;
+    padding: 3px 0;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+.top-section > .username .more-options {
+    position: absolute;
+    display: inline-block;
+    margin-left: 30px;
+    margin-top: -10px;
+    background-color: rgb(255, 255, 255);
+    color: rgb(37, 37, 37);
+    border-radius: 5px;
+    width: 30%;
+    visibility: hidden;
+    pointer-events: none;
+}
+.top-section > .username .more-options.visible {
+    visibility: visible;
+    pointer-events: all;
+}
+.top-section > .username .more-options li:hover {
+    background-color: rgb(48, 48, 48);
+    color: rgb(224, 224, 224);
+    cursor: pointer;
+}
+.top-section > .username .more-options li:first-child:hover {
+    border-radius: 5px 5px 0 0;
+}
+.top-section > .username .more-options li:last-child:hover {
+    border-radius: 0 0 5px 5px;
+}
+
+.top-section > .follow {
+    margin-top: 10px;
+}
+
+.top-section > .follow > button {
+    outline: none;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background-color: rgb(255, 255, 255);
+    padding: 4px 7px;
+    cursor: pointer;
+}
+
+.top-section button.following {
+    background-color: rgb(61, 61, 61);
+    color: rgb(241, 237, 237)
+}
+
+.top-section > .follow > span.message {
+    position: absolute;
+    margin-left: 4px;
+}
+
+/* divider */
+
+.account-followers-divider {
+    border: none;
+    border-bottom: 1px solid #fff; 
+    width: 87%;
+    margin: 1.2rem auto 0;
+}
+
+.followers-container {
+    background-color: #fff;
+    border-radius: 5px;
+    width: 80%;
+    margin: 1rem auto 0;
+    padding: 10px;
+}
+
+.followers-container > h5 {
+    color: #6e6e6e;
+    margin-bottom: 1rem;
+}
+
+.followers-container .no-followers {
+    color: rgb(145, 145, 145);
+    font-size: 0.9rem;
+}
+
+
+.followers-container span {
+    position: absolute;
+    margin-left: 0.8rem;
+    color: #ABABAB; 
+}
+
+.followers-container .followers {
+    margin-bottom: 1.7rem;
+    margin-top: 0.4rem;
+}
+.followers-container .following {
+    margin-bottom: 1.7rem;
+    margin-top: 0.4rem;
+}
+
+.followers-container .entity {
+    margin-bottom: 0.4rem;
+}
+
+.followers-container .entity img {
+    width: 25px;
+    height: 25px;
+}
+
+.followers-container .entity span {
+
+}
+
+
+.followers-container h6 {
+    text-align: center;
+    color: #4E72EF;
+}

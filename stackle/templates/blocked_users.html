@@ -1,0 +1,64 @@
+{% from '_formhelper.html' import render_field %}
+{% from 'macros.html' import settings_sidebar %}
+
+{% extends 'home_layout.html' %}
+
+{% block title %}Account{% endblock %}
+
+{% block script %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blocked.css') }}">
+{% endblock %}
+
+{% block sidebar %}
+    {{ settings_sidebar() }}
+{% endblock %}
+
+{% block content %}
+    <div class="blocked-container">
+        <h3 class="title">Users you've blocked <span>{{ followers_count }}</span></h3>
+        <div class="blocked">
+                {% if False %}
+                    <h3 class="no-followers">You have'nt blocked anyone yet.</h3>
+                {% else %}
+                    {% for user in current_user.blocked %}
+                            <div class="blocked-card">
+                                <a href="{{ url_for('user_profile', user_account=user.username) }}">
+                                <img src="{{ url_for('static', filename='images/profile_pictures/' + user.profile_picture) }}" alt="">
+                                </a>
+                                <h4 class="card-account-name">{{ user.account_name }}</h4>
+                                <h4 class="card-username">{{ user.username }}</h4>
+                                <button class="block-btn" id="{{ user.id }}">Unblock</button>
+                            </div>
+                    {% endfor %}
+                {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block internal_script %}
+    <script>
+        // Make the sidebar nav item active
+        $('#manage-info').toggleClass('active', () => {
+            if (document.location.pathname == '/account/settings/manage') {
+                return true;
+            }
+            else return false;
+        });
+
+        $('.blocked-card .block-btn').on('click', (event) => {
+            let userId = event.target.id;
+            $.ajax({
+                url: `/api/block/${userId}`,
+                method: 'POST',
+                async: true,
+                crossDomain: true,
+                dataType: 'json',
+            }).done((responseData, responseText) => {
+                console.log(responseData);
+                window.location.reload();
+            });
+        });
+
+    </script>
+{% endblock %}

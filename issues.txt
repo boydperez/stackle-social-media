@@ -1,0 +1,3 @@
+FIX - Use a datetime.utcnow() *callable* and not datetime.utcnow
+
+post_image can be nullable - change its validation in form

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/post_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user_profile_sidebar.css') }}">
+
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- JS -->
+    {% block script %}{% endblock %}
+
+    <!-- Font Awesome 4 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <nav id="navbar">
+        <div id="nav-container">
+            <div id="nav-brand">
+                <span><a href="{{ url_for('home') }}">Stackle</a></span>
+            </div>
+            <ul id="nav-item-container">
+                <li class="nav-item"><a href="{{ url_for('messenger') }}">Messenger</a></li>
+
+                {% set image_file_path = 'images/profile_pictures/' + current_user.profile_picture %}
+                <li class="nav-item">
+                    <a href="{{ url_for('user_profile', user_account=current_user.username) }}"><img src="{{ url_for('static', filename=image_file_path) }}" alt=""></a>
+                    <span class="expand-dropdown">
+                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+                    </span>
+                    <ul id="dropdown">
+                        <li class="dropdown-item"><a href="{{ url_for('account') }}">Account</a></li>
+                        <li class="dropdown-item"><a href="{{ url_for('new_post') }}">Add Post</a></li>
+                        <li class="dropdown-item"><a href="{{ url_for('logout') }}">Logout</a></li>
+                   </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- TODO Customize flash messages -->
+    <!-- TODO Move code to _flashhelper.html -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="flash-messages">
+                        <h5><span id="close">X</span> NOTIFICATION: {{ message }}</h5>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+    <div id="main-container">
+        <!-- Sidebar -->
+        <div id="sidebar">
+            {% block sidebar %}
+            {% endblock %}
+        </div>
+
+        <!-- Content -->
+        <div id="content">
+            {% block content %} 
+            {% endblock %}
+        </div>
+    </div>
+
+    <script>
+        $("#close").on('click', () => {
+            $(".flash-messages").hide(300);
+        });
+
+        $(".fa-caret-down").on('click', () => {
+            $("#dropdown").toggle();
+        });
+
+        // Caret down drop down in navbar
+        $(document).on('click', (event) => {
+            console.log('clicked outside dropdown');
+            if (!$(event.target).is($('.fa-caret-down')))
+                $('#dropdown').hide();
+        })
+
+    </script>
+
+    {% block internal_script %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!-- Sidebar content goes here -->
+{% macro settings_sidebar() %}
+    <div class="side-nav">
+        <div id="account-info">
+            <a href="{{ url_for('account') }}">Account Details</a>
+        </div>
+        <div id="manage-info">
+            <a href="{{ url_for('blocked_users') }}">Blocked Users</a>
+        </div>
+    </div>
+{% endmacro %}
+
+
+{% macro home_sidebar() %}
+    <div id="home-sidebar">
+        <div id="top-section">
+            <div id="search-bar">
+                <input type="search" name="searchUser" id="search-user" placeholder="Search users">
+                <div id="show-matched-users">
+                </div>
+            </div>
+        </div>
+        <!-- <div id="bottom-section">
+            <a href="{{ url_for('new_post') }}"><button id="add-post">Add Post</button></a>
+        </div> -->
+    </div>
+{% endmacro %}

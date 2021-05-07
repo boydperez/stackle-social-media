@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackle - {% block title %}{% endblock %}</title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/form_style.css') }}">
+
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='scripts/form_script.js') }}"></script>
+    {% block script %}{% endblock %}
+
+    
+</head>
+<body>
+    <nav id="navbar">
+        <div id="nav-container">
+            <div id="nav-brand">
+                <span>Stackle</span>
+            </div>
+            <ul id="nav-item-container">
+                <li class="nav-item"><a href="{{ url_for('messenger') }}">Messenger</a></li>
+                <li class="nav-item">{% block nav_item %}{% endblock %}</li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- TODO Customize flash messages -->
+    <!-- TODO Move code to _flashhelper.html -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="flash-messages">
+                        <h5><span id="close">X</span> NOTIFICATION: {{ message }}</h4>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+    <div id="form-container">
+        {% block content %} 
+        {% endblock %}
+    </div>
+
+    <script>
+        $("#close").on('click', () => {
+            $(".flash-messages").hide(300);
+        });
+    </script>
+
+    {% block internal_script %}{% endblock %}
+</body>
+</html>

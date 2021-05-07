@@ -1,0 +1,550 @@
+:root {
+    --nav-background: #1a1c20;
+    --nav-background: #282828;
+    --nav--color: #ffffff; 
+
+    --sidebar-background: #eeeeee; 
+
+    --form-btn-background: #333;
+    --form-btn-color: #fff;
+}
+
+html {
+    font-size: 100%;
+    scroll-behavior: smooth;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    background-color: var(--body-background); 
+}
+
+#navbar {
+    background-color: var(--nav-background);
+    color: var(--nav--color);
+    height: 2.813rem;
+    width: 100%;
+}
+
+#nav-container {
+    background-color: inherit;
+    height: inherit;
+    width: 80%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+#nav-brand > span {
+    text-transform: uppercase;
+}
+
+#nav-brand > span:hover {
+    cursor: pointer;
+}
+
+#nav-item-container {
+    /* background-color: pink; */
+}
+
+.nav-item {
+    list-style: none;
+    display: inline-block;
+    margin-left: 1.75rem;
+    font-size: 1rem;
+}
+
+.nav-item:first-child {
+    border: 1px solid white;
+    padding: 5px 13px;
+    border-radius: 5px;
+}
+
+.nav-item:last-child img {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    position: absolute;
+    top: calc(1.4065rem - 1.25rem);
+    cursor: pointer;
+}
+
+.expand-dropdown {
+    margin-left: 3.5rem;
+    cursor: pointer;
+}
+
+#dropdown {
+    position: absolute;
+    margin-top: 1.07rem;
+    color: rgb(34, 33, 33);
+    list-style: none;
+    background-color: #f1f0f0; 
+    width: 6.8rem;
+    text-align: center;
+    display: none;
+    border-radius: 1.3px;
+    z-index: 999;
+}
+
+#dropdown .dropdown-item {
+    margin: 0.7rem 0;
+    padding: 0.3rem 0;
+}
+
+#dropdown .dropdown-item:hover {
+    background-color: #333;
+    color: rgb(243, 243, 236);
+    cursor: pointer;
+}
+
+
+.flash-messages {
+    background-color: #e9dfcc;
+    height: 2.5rem;
+    min-width: 10rem;
+    padding: 0 2rem;
+    margin: auto;
+    border-radius: 4px;
+    text-align: center;
+    line-height: 2.5rem;
+    font-size: 1rem;
+    color: #55554c;
+    position: fixed;
+    top: 2.813rem;
+    right: 0; 
+}
+
+#close {
+    margin-right: 1rem;
+    color: #a83d3d;
+    cursor: pointer;
+}
+
+
+#main-container {
+    display: flex;
+
+}
+
+#sidebar {
+    background-color: var(--sidebar-background);
+    width: 20%;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+}
+
+#home-sidebar {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#home-sidebar #search-bar {
+    width: 70%;
+    margin: 1.6rem auto 0;
+}
+
+#show-matched-users h5 {
+    background-color: #fcfcfc;
+    margin: 0.4rem 0;
+    padding: 5px 2px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+#show-matched-users h5:hover {
+    background-color: rgb(51, 51, 51);
+    cursor: pointer;
+}
+
+#show-matched-users h5:hover span {
+    color: #fff;
+}
+
+#search-bar img {
+    width: 1.3rem;
+    height: 1.3rem;
+    border-radius: 50%;
+}
+
+#search-bar span {
+    color: rgb(109, 105, 105);
+    margin-left: 5px;
+}
+
+#search-bar > input {
+    width: 100%;
+    height: 1.3rem;
+    padding: 0.7rem 0.3rem;
+    color: #333;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    border: 0.01px solid rgba(51, 51, 51, 0.308);
+}
+
+/* #add-post {
+    text-transform: uppercase;
+    border: 1px solid #525050;
+    background-color: #3f3e42;
+    color: #f5f3e7;
+    padding: 0.61rem 0.7rem;
+    width: 95%;
+    margin: 0 2.5% 2.9rem 2.5%;
+    cursor: pointer;
+} */
+
+#add-post:hover {
+    background-color: #5a5a5a;
+}
+
+
+#content {
+    background-color: #fff;
+    width: 80%;
+    min-height: 100vh;
+}
+
+
+
+/* new_post.html */
+#new-post {
+    text-align: center;
+}
+
+#new-post > h3 {
+    font-size: 1.7rem;
+    color: rgb(85, 83, 83);
+    margin-top: 2rem;
+}
+
+#new-post-form {
+    width: 80%;
+    margin: 3rem auto 0;
+    text-align: center;
+}
+
+#new-post-img {
+    width: 500px;
+    height: 400px;
+    display: none;
+}
+
+.new-post-field #post_content { 
+    margin-top: 4rem;
+    outline: none;
+    border: none;
+    width: 70%;
+    border-bottom: 1px solid black;
+    padding: 2px 3px;
+    box-sizing: border-box;
+    font-size: 1.08rem;
+    color: rgb(77, 74, 74);
+}
+
+.new-post-field #post_content:focus {
+    border-bottom-color: rgb(120, 121, 121);
+}
+
+.new-post-field #submit {
+    background-color: rgb(97, 95, 95);
+    width: 5rem;
+    height: 2rem;
+    position: absolute;
+    top: calc(2.813rem + 2rem);
+    right: 8.9rem;
+    border: none;
+    outline: none;
+    font-size: 0.8rem;
+    letter-spacing: 1.3px;
+    text-transform: uppercase;
+    color: #f0efef;
+    cursor: pointer;
+}
+
+#post-cancel-btn {
+    background-color: rgb(141, 61, 61);
+    width: 5rem;
+    height: 2rem;
+    position: absolute;
+    top: calc(2.813rem + 2rem);
+    right: 3rem;
+    border: none;
+    outline: none;
+    font-size: 0.8rem;
+    letter-spacing: 1.3px;
+    text-transform: uppercase;
+    color: #f0efef;
+    cursor: pointer;
+}
+
+
+
+
+
+/* account.html */
+
+/* sidebar */
+.side-nav {
+}
+
+.side-nav > div {
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #252121;
+    width: 70%; 
+    padding: 0.5rem 0;
+    margin: 1rem 0 3rem 1rem;
+    border-bottom: 1px solid rgb(146, 144, 144);
+}
+
+.side-nav > div:hover {
+    color: #6ccbcc;
+    cursor: pointer;
+}
+
+.side-nav > div.active {
+    border-bottom-color: #61bec0;
+    color: #377e80;
+}
+
+#account-img {
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+
+#account-page-title {
+    margin: 2rem 0 3rem 0;
+    text-align: center;
+    font-size: 1.6rem;
+    color: #333; 
+}
+
+#account-update-forms {
+    width: 100%;
+    margin: auto;
+    text-align: center;
+}
+
+#image-block {
+    margin-bottom: 3rem;
+}
+
+#input-img {
+    padding: 2rem 4rem;
+    margin-left: 3rem;
+}
+
+.form-field {
+    margin-bottom: 1rem;
+}
+
+.form-field > input {
+    width: 18rem;
+    height: 1.8rem;
+    padding: 2px 0;
+    box-sizing: border-box;
+    text-align: center;
+    outline: none;
+    border: 1px solid #333;
+}
+
+#status-block {
+    margin-bottom: 3rem;
+}
+
+#form-btn > input {
+    width: 18rem;
+    height: 2rem;
+    box-sizing: border-box;
+    padding: 2px 8px;
+    background-color: #333;
+    color: #fff;
+    outline: none;
+    border: 1px solid #333;
+    cursor: pointer;
+}
+
+#form-btn > input:hover {
+    background-color: #fff;
+    color: #333;
+}
+
+.form-error {
+    color: #d63434;
+    font-size: 0.81rem;
+    margin-top: 0.4rem;
+}
+
+.form-error::before {
+    content: '*';
+}
+
+#username-avail {
+}
+
+
+
+
+/* Post styles */
+#posts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    margin-top: 3rem;
+}
+
+.post {
+    background-color: rgba(236, 236, 236, 0.747);
+    display: flex;
+    width: 28.125rem;
+    height: 27.5rem;
+    padding: 1rem 1rem 0 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-bottom: 4rem;
+    transition: background-color 200ms ease-in-out;
+}
+.post:hover {
+    background-color: rgba(46, 46, 46, 0.849);
+    color: rgb(241, 241, 241);
+}
+
+.left-col {
+    padding-right: 1rem;
+}
+
+.post .profile-picture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.post .time-posted {
+    font-size: 0.91rem;
+}
+
+.post .right-col {
+}
+
+.post .user {
+    line-height: 40px;
+    font-size: 0.98rem;
+}
+
+.post .text-content {
+    margin-top: 1rem;
+}
+
+.post .image-content {
+}
+.post .image-content img {
+    width: 20rem;
+    height: 18rem;
+    margin-top: 0.31rem;
+    border-radius: 5px;
+}
+
+.post .post-modifiers {
+    margin-top: 0.8rem;
+    display: flex;
+    /* justify-content: space-around; */
+    justify-content: space-between;
+    font-size: 1.2rem;
+}
+
+.post .post-modifiers .fa {
+    cursor: pointer;
+}
+
+/* Hover colors for font awesome icons */
+.post .fa-heart-o {
+    color: black;
+}
+.post .fa-heart-o:hover {
+    color: pink;
+}
+
+.post .fa-heart {
+    color: pink;
+}
+
+.post .fa-comment-o:hover {
+    color: #aa9d9d;
+}
+
+.post .fa-trash-o:hover {
+    color: #d16565;
+}
+
+.post .fa-expand{
+    position: absolute;
+}
+.post .fa-expand:hover {
+    color: #beb2b2;
+    font-size: 1.3rem;
+}
+
+
+.post .post-modifiers > div {
+    margin: 0 5px;
+}
+
+
+
+
+.post .post-modifiers > h5:hover {
+    color: rgb(87, 81, 81);
+}
+
+
+/* user_profile.html */
+/* sidebar */
+.follow-btn.follow::after {
+    content: 'Follow';
+}
+
+.follow-btn.following::after {
+    content: 'Following';
+}
+
+
+
+/* delete_post */
+.post-to-be-deleted {
+    text-align: center;
+    margin-top: 3rem;   
+}
+.post-to-be-deleted h3 {
+    margin-top: 1rem;
+}
+.post-to-be-deleted form {
+    margin-top: 1rem;
+}
+.post-to-be-deleted input {
+    padding: 5px;
+    border: none;
+    cursor: pointer;
+}
+.post-to-be-deleted input:nth-child(2) {
+    background-color: rgb(207, 118, 118);
+    margin-right: 15px;
+}

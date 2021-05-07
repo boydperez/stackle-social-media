@@ -1,0 +1,112 @@
+{% extends 'home_layout.html' %}
+
+{% block title %} Followers {% endblock title %}
+
+{% block script %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/followers.css') }}">
+{% endblock %}
+
+{% block sidebar %} 
+<div class="top-section">
+        <div class="profile">
+            <img src="{{ url_for('static', filename='images/profile_pictures/' + user.profile_picture) }}" alt=""> 
+            <span>{{ user.activity_status }}</span>
+        </div>
+        <div class="account-name">
+            {{ user.account_name }}
+        </div>
+        <div class="username">
+            {{ user.username }}
+        </div>
+        <div class="follow">
+            {% if not user== current_user %}
+                {% if current_user.is_following(user) %}
+                    <button class="follow-btn following" type="button"></button>
+                {% else %}
+                    <button class="follow-btn follow" type="button"></button>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+
+    <hr class="account-followers-divider">
+
+    <div class="followers-container">
+        <h5>FOLLOWERS<span>{{ followers_count }}</span></h5>
+        <div class='followers'>
+            {% if not has_followers %}
+                <h3 class="no-followers">No one's following you.</h3>
+            {% else %}
+                {# Show top 4 followers #}
+                {% for follower in followers[:4] %}
+                    <div class="entity"><img src="{{ url_for('static', filename='images/profile_pictures/' + follower.profile_picture) }}" alt=""><span>{{ follower.username}}</span></div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <h5>FOLLOWING<span>{{ followings_count }}</span></h5>
+        <div class='following'>
+            {% if not has_followings%}
+                <h3 class="no-followers">You aren't following anyone.</h3>
+            {% else %}
+                {# Show top 4 following #}
+                {% for following in followings[:4] %}
+                    <div class="entity"><img src="{{ url_for('static', filename='images/profile_pictures/' + following.profile_picture) }}" alt=""><span>{{ following.username}}</span></div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <a href="{{ url_for('followers', user_account=current_user.username) }}"><h6 class="see-all">SEE ALL</h6></a>
+    </div>
+{% endblock sidebar %}
+
+{% block content %} 
+
+    <div class="follower-container">
+        <h3>FOLLOWERS <span>{{ followers_count }}</span></h3>
+        <div class="followers">
+                {% if not has_followers %}
+                    <h3 class="no-followers">No one's following you.</h3>
+                {% else %}
+                    {% for follower in followers %}
+                        <a href="{{ url_for('user_profile', user_account=follower.username) }}">
+                            <div class="follower-card">
+                                <img src="{{ url_for('static', filename='images/profile_pictures/' + follower.profile_picture) }}" alt="">
+                                <h4 class="card-account-name">{{ follower.account_name }}</h4>
+                                <h4 class="card-username">{{ follower.username }}</h4>
+                            </div>
+                        </a>
+                    {% endfor %}
+                {% endif %}
+            <!-- {% for _ in range(10) %}
+                <div class="follower-card">
+                </div>
+            {% endfor %} -->
+        </div>
+    </div>
+
+    <div class="following-container">
+        <h3>FOLLOWING <span>{{ followings_count }}</span></h3>
+        <div class="following">
+            {% if not has_followings %}
+                <h3 class="no-followings">You aren't following anyone.</h3>
+            {% else %}
+                {% for following in followings %}
+                    <a href="{{ url_for('user_profile', user_account=following.username) }}">
+                        <div class="following-card">
+                            <img src="{{ url_for('static', filename='images/profile_pictures/' + following.profile_picture) }}" alt="">
+                            <h4 class="card-account-name">{{ following.account_name }}</h4>
+                            <h4 class="card-username">{{ following.username }}</h4>
+                        </div>
+                    </a>
+                {% endfor %}                
+            {% endif %}
+
+            <!-- {% for _ in range(10) %}
+                <div class="following-card">
+                </div>
+            {% endfor %} -->
+        </div>
+    </div>
+
+{% endblock content %}

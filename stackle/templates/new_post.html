@@ -1,0 +1,59 @@
+{% from '_formhelper.html' import render_upload_field %}
+{% extends 'home_layout.html' %}
+
+{% block title %}New Post{% endblock %}
+
+
+{% block sidebar %}
+{% endblock %}
+
+{% block content %}
+    <div id="new-post">
+        <h3>Add new post</h3>
+
+        <form id="new-post-form" action="" method="POST" enctype="multipart/form-data" novalidate>
+            {{ form.csrf_token }}
+                <img id="new-post-img" src="" alt="">
+
+                <div class="new-post-field">
+                    {{ form.image_file }}
+                </div>
+                <div class="new-post-field">
+                    {{ form.post_content }}
+                </div>
+                <div class="new-post-field">
+                    {{ form.submit(value="Post") }}
+                </div>
+            </div>
+        </form>
+        <a href="{{ url_for('home') }}"><button id="post-cancel-btn">Cancel</button></a>
+    </div>
+{% endblock %}
+
+{% block internal_script %}
+    <script>
+        // Display profile picture when selected
+        $("#image_file").change(() => {
+            console.log('test this')
+            let input = document.getElementById('image_file');
+
+            if (input.files && input.files[0]) {
+                let reader = new FileReader();
+
+                reader.onload = function(event) {
+                    $('#new-post-img').attr('src', event.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+
+        // View image when selected (for new post)
+        $('#image_file').change(() => {
+            if ($('#image_file').val()) {
+                $('#new-post-img').show();
+            }
+        });
+
+    </script>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'home_layout.html' %}
+
+{% block title %}Delete Post{% endblock %}
+
+{% block content %}
+    <div class="post-to-be-deleted">
+        <!-- <div class="left-col">
+            <img class="profile-picture" src="{{ url_for('static', filename='images/profile_pictures/' + current_user.profile_picture) }}" alt=""> 
+        </div> -->
+        <div class="right-col">
+            <!-- <h3 class="user">{{ post.user.account_name }}<span class="time-posted"> . {{ post.posted_on.strftime('%a') }}</span></h3> -->
+            <div class="text-content">
+                <p class="post-text-content">{{ post.text_content }}</p>
+            </div>
+            <div class="image-content">
+                <img src="{{ url_for('static', filename='images/posts/' + post.image_content) }}" alt="image_content">
+            </div>
+        </div>
+        <h3>Are you sure you want to delete this post?</h3>
+        <form action="" method="POST">
+            {{ form.csrf_token }}
+            <input type="submit" name="action" value="Delete">
+            <input type="submit" name="action" value="Cancel">
+        </form>
+    </div>
+
+{% endblock %}

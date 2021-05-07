@@ -1,0 +1,163 @@
+{% extends 'home_layout.html' %}
+
+{% block title %}Home - {{ user.account_name }}{% endblock %}
+
+{% block script %} 
+    <script src="{{ url_for('static', filename='scripts/like_post.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/follow.js') }}"></script>
+{% endblock %}
+
+{% block sidebar %}
+    <div class="top-section">
+        <div class="profile">
+            <img src="{{ url_for('static', filename='images/profile_pictures/' + user.profile_picture) }}" alt=""> 
+            <span>{{ user.activity_status }}</span>
+        </div>
+        <div class="account-name">
+            {{ user.account_name }}
+        </div>
+        <div class="username">
+            {{ user.username }}
+            {% if not user == current_user %}
+                <div class="more">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+                <ul class="more-options">
+                    {% if user in current_user.blocked %}
+                        <li class="block-link">unblock</li>
+                    {% else %}
+                        <li class="block-link">block</li>
+                    {% endif %}
+                    <li>Report</a></li>
+                </ul>
+            {% endif %}
+        </div>
+        <div class="follow">
+            {% if not user == current_user %}
+                {% if current_user.is_following(user) %}
+                    <button class="follow-btn following" type="button"></button>
+                {% else %}
+                    <button class="follow-btn follow" type="button"></button>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+
+    <hr class="account-followers-divider">
+
+    <div class="followers-container">
+        <h5>FOLLOWERS<span>{{ followers_count }}</span></h5>
+        <div class='followers'>
+            {% if not has_followers %}
+                {% if user == current_user %}
+                    <h3 class="no-followers">No one's following you.</h3>
+                {% else %}
+                    <h3 class="no-followers">No one's following {{ user.username }}.</h3>
+                {% endif %}
+            {% else %}
+                {# Show top 4 followers #}
+                {% for follower in followers[:4] %}
+                    <div class="entity"><img src="{{ url_for('static', filename='images/profile_pictures/' + follower.profile_picture) }}" alt=""><span>{{ follower.username}}</span></div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <h5>FOLLOWING<span>{{ followings_count }}</span></h5>
+        <div class='following'>
+            {% if not has_followings%}
+                {% if user == current_user %}
+                    <h3 class="no-followers">You aren't following anyone.</h3>
+                {% else %}
+                    <h3 class="no-followers">{{ user.username }} isn't following anyone.</h3>
+                {% endif %}
+            {% else %}
+                {# Show top 4 following #}
+                {% for following in followings[:4] %}
+                    <div class="entity"><img src="{{ url_for('static', filename='images/profile_pictures/' + following.profile_picture) }}" alt=""><span>{{ following.username}}</span></div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <a href="{{ url_for('followers', user_account=current_user.username) }}"><h6 class="see-all">SEE ALL</h6></a>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div id="posts">
+        {% for post in posts %}
+            <div class="post">
+                <div class="left-col">
+                   <img class="profile-picture" src="{{ url_for('static', filename='images/profile_pictures/' + post.user.profile_picture) }}" alt=""> 
+                </div>
+                <div class="right-col">
+                    <h3 class="user">{{ post.user.username}}<span class="time-posted"> . {{ post.posted_on.strftime('%a') }}</span></h3>
+                    <div class="text-content">
+                        <p class="post-text-content">{{ post.text_content }}</p>
+                    </div>
+                    <div class="image-content">
+                        <img src="{{ url_for('static', filename='images/posts/' + post.image_content) }}" alt="image_content">
+                    </div>
+
+                    <div class="post-modifiers">
+                        <div>
+                            {% if current_user.is_liked(post) %}
+                                {% set like_class = 'fa-heart-liked'%}
+                            {% else %}
+                                {% set like_class = '' %}
+                            {% endif %}
+                            <i class="fa fa-heart-o {{ like_class }}" aria-hidden="true" id="{{ post.id }}"></i>
+                            <span>{{ post.likes }}</span>
+                            <!-- <h5 class="like-btn" id="{{ post.id }}">Like post</h5> -->
+                        </div>
+                        <div>
+                            <i class="fa fa-comment-o" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            {# Check if the post belongs to the current user #}
+                            {% if current_user.username == post.user.username%}
+                                <a href="{{ url_for('delete_post', post_id=post.id) }}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <a href="{{ url_for('post', post_id=post.id) }}"><i class="fa fa-expand" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block internal_script %}
+    <script>
+        // Set userId
+        let userId = '{{ user.id }}';
+
+        // More options
+        $('.more').on('click', () => {
+            $(".more-options").toggleClass('visible');
+        });
+        
+        $('.more-options .block-link').on('click', (event) => {
+                $.ajax({
+                url: `/api/block/${userId}`,
+                method: 'POST',
+                async: true,
+                crossDomain: true,
+                dataType: 'json',
+            }).done((responseData, responseText) => {
+                console.log(responseData);
+            
+                if (responseData.message == 'blocked') {
+                    console.log('blocked!')
+                    $('.block-link').text('unblock');
+                } else {
+                    console.log('unblocked!')
+                    $('.block-link').text('block');
+                }
+            });
+        });
+    </script>
+{% endblock %}

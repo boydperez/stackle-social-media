@@ -1,0 +1,47 @@
+{% from '_formhelper.html' import render_field %}
+
+{% extends 'form_layout.html' %}
+{% block title %} Signup {% endblock %}
+{% block script %}
+    <script src="{{ url_for('static', filename='scripts/username_avail.js') }}"></script>
+{% endblock %}
+
+{% block nav_item %}Login{% endblock %}
+
+{% block content %}
+    <!-- TODO Customize flash messages -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <h5>{{ message }}</h5>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <h3 class="form-block" id="form-title">Sign up today</h3>
+
+    <form class="form-block" action="" method="POST" novalidate>
+        {{ form.csrf_token }}
+
+        {{ render_field(form.name, "Name") }}
+        {{ render_field(form.username, "Username") }}
+        {{ render_field(form.email, "Email") }}
+        {{ render_field(form.password, "Password") }}
+        {{ render_field(form.confirm_password, "Confirm Password") }}
+
+        <div id="form-btn">
+            {{ form.submit(value="Sign Up") }}
+        </div>
+    </form>
+{% endblock %}
+
+{% block internal_script %}
+    <script>
+        // Set a click event for second .nav-item
+        $('.nav-item').on('click', () => {
+            // Get the route for the login page
+            location.href = "{{ url_for('login') }}";
+        });
+
+    </script>
+{% endblock %}

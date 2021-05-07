@@ -1,0 +1,36 @@
+{% from '_formhelper.html' import render_field %}
+
+{% extends 'form_layout.html' %}
+
+{% block title %} Login {% endblock %}
+
+{% block nav_item %}Sign Up{% endblock %}
+
+{% block content %}
+    <h3 class="form-block" id="form-title">Login here</h3>
+
+    <form class="form-block" action="" method="POST" novalidate>
+        {{ form.csrf_token }}
+
+        {{ render_field(form.username, "Username") }}
+        <!-- <p id="disp"></p> -->
+        {{ render_field(form.password, "Password") }}
+
+        <div id="forgot-password">
+            <a href="#">Forgot Password?</a>
+        </div>
+
+        <div id="form-btn">
+            {{ form.submit(value="Login") }}
+        </div>
+    </form>
+{% endblock %}
+
+{% block internal_script %}
+    <script>
+        $('.nav-item').on('click', () => {
+            location.href = "{{ url_for('signup') }}";
+        });
+
+    </script>
+{% endblock %}

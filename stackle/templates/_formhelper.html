@@ -1,0 +1,24 @@
+{% macro render_field(field, placeholder='') %}
+    <div class="form-field">
+        {{ field(placeholder=placeholder, autocomplete="off", class="form-input", **kwargs) }}
+        {% for error in field.errors %}
+            <p class="form-error">{{ error }}</p>
+        {% endfor %}
+        {% if placeholder == 'Username' %}
+            <p id="username-avail"></p>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+
+{% macro render_upload_field(field, placeholder='') %}
+    <div class="test-form">
+        {{ field(placeholder=placeholder, autocomplete="off", class="form-input", id="test", **kwargs) }}
+        {% for error in field.errors %}
+            <p class="form-error">{{ error }}</p>
+        {% endfor %}
+        {% if placeholder == 'Username' %}
+            <p id="username-avail"></p>
+        {% endif %}
+    </div>
+{% endmacro %}

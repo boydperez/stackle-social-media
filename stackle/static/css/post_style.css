@@ -1,0 +1,32 @@
+.single-post {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: 3rem auto 0;
+}
+.single-post .left-section {
+    display: flex;
+    width: 50%;
+    height: 30rem;
+    /* margin-right: 2rem; */
+}
+.single-post .left-col img{
+    width: 40px;
+    height: 40px;
+}
+.single-post .right-col {
+    width: 100%;
+    height: 100%;
+}
+.single-post .right-col img {
+    width: 100%;
+    height: 100%;
+}
+.single-post .post-modifiers {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+

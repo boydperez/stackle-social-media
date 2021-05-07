@@ -1,0 +1,90 @@
+{% from '_formhelper.html' import render_field %}
+{% from 'macros.html' import settings_sidebar %}
+
+{% extends 'home_layout.html' %}
+
+{% block title %}Account{% endblock %}
+
+{% block script %}
+    <script src="{{ url_for('static', filename='scripts/username_avail.js') }}"></script>
+{% endblock %}
+
+{% block sidebar %}
+    {{ settings_sidebar() }}
+{% endblock %}
+
+{% block content %}
+    <h4 id="account-page-title">Update Your Account</h4>
+
+    <div id="account-update-forms">
+        <form action="" method="POST" enctype="multipart/form-data" novalidate>
+            {{ form.csrf_token }}
+        
+            <div id="image-block">
+                <img id="account-img" src="{{ image_file }}" alt="profile picture">
+
+                <!-- TODO Use div to upload img file -->
+                <div id="upload-img">
+                    <input id="input-img" type="file" name="image">
+                </div>
+            </div>
+
+            <div id="other-fields-block">
+                {{ render_field(form.name, value=current_user.account_name) }}
+                {{ render_field(form.username, 'Username', value=current_user.username) }}
+                {{ render_field(form.email, value=current_user.email) }}
+
+                <div id="status-block">
+                    <input type="radio" name="activityStatus" id="active" value="active">
+                    <label for="active">Active</label>
+                    <input type="radio" name="activityStatus" id="away" value="away">
+                    <label for="away">Away</label>
+                    <input type="radio" name="activityStatus" id="busy" value="busy">
+                    <label for="busy">Busy</label>
+                </div>
+
+                <div id="form-btn">
+                    {{ form.submit(value="Update") }}
+                </div>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
+    
+
+{% block internal_script %}
+    <script>
+        // TODO: Replace 'Username is taken' with 'Your current username'
+        /*console.log('test internal script for account.html')
+        $("#username").on('input', () => {
+            console.log('test');
+            if ($("#username-avail").text() == 'Username is taken') {
+                $("#username-avail").text('Your current username');
+            }
+        });*/
+
+        // Display profile picture when selected
+        $("#input-img").change(() => {
+            let input = document.getElementById('input-img');
+
+            if (input.files && input.files[0]) {
+                let reader = new FileReader();
+
+                reader.onload = function(event) {
+                    $('#account-img').attr('src', event.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+
+        // Make the sidebar nav item active
+        $('#account-info').toggleClass('active', () => {
+            if (document.location.pathname == '/account/settings/user') {
+                return true;
+            }
+            else return false;
+        });
+    </script>
+{% endblock %}

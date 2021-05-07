@@ -1,0 +1,95 @@
+{% extends 'home_layout.html' %}
+{% from 'macros.html' import home_sidebar %}
+
+{% block title %}Home{% endblock %}
+
+{% block script %}
+    <meta name="referrer" content="no-referrer" />
+    <script src="{{ url_for('static', filename='scripts/like_post.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/comment.js') }}"></script>
+{% endblock %}
+
+
+{% block sidebar %}
+    {{ home_sidebar() }}
+{% endblock %}
+    
+{% block content %}
+    <div id="posts">
+        {% for post in posts %}
+            <div class="post">
+                <div class="left-col">
+                    <a href="{{ url_for('user_profile', user_account=post.user.username) }}">
+                        <img class="profile-picture" src="{{ url_for('static', filename='images/profile_pictures/' + post.user.profile_picture) }}" alt=""> 
+                    </a>
+                </div>
+                <div class="right-col">
+                    <a href="{{ url_for('user_profile', user_account=post.user.username) }}"><h3 class="user">{{ post.user.username}}<span class="time-posted"> . {{ post.posted_on.strftime('%a') }}</span></h3></a>
+                    <div class="text-content">
+                        <p class="post-text-content">{{ post.text_content }}</p>
+                    </div>
+                    <div class="image-content">
+                        <img id="{{ post.id }}" src="{{ url_for('static', filename='images/posts/' + post.image_content) }}" alt="image_content">
+                    </div>
+
+                    <div class="post-modifiers">
+                        <div>
+                            {% if current_user.is_liked(post) %}
+                                {% set like_class = 'fa-heart'%}
+                            {% else %}
+                                {% set like_class = 'fa-heart-o' %}
+                            {% endif %}
+                            <i class="fa heart {{ like_class }}" aria-hidden="true" id="{{ post.id }}"></i>
+                            <span class="like-counter">{{ post.likes }}</span>
+                            <!-- <h5 class="like-btn" id="{{ post.id }}">Like post</h5> -->
+                        </div>
+                        <div>
+                            <a href="{{ url_for('post', post_id=post.id) }}"><i class="fa fa-comment-o" aria-hidden="true"></i></a>
+                            <span class="comment-counter">{{ (post.comments|length ) }}</span>
+                        </div>
+                        <div>
+                            {# Check if the post belongs to the current user #}
+                            {% if current_user.username == post.user.username%}
+                                <a href="{{ url_for('delete_post', post_id=post.id) }}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block internal_script %}
+    <script>
+
+        // View single post
+        $('.image-content img').on('click', (event) => {
+            let postId = event.target.id;
+            window.location.href = `/post/${postId}`;
+        });
+
+        // Search user 
+        $('#search-user').on('input', () => {
+            let username = $("#search-user").val();
+            $('#show-matched-users').empty();
+
+            if (username) {
+                $.ajax({
+                    url: `/api/get-users/${username}`,
+                    method: 'GET',
+                    async: true,
+                    crossDomain: true,
+                    dataType: 'json',
+                }).done((responseData, responseText) => {
+                    let users = responseData.users;
+                    let profile = responseData.profile;
+                    users.forEach((user, index) => {
+                        let child = `<a href="/${user}"><h5><img src="/static/images/profile_pictures/${profile[index]}"><span>${user}</span></h5></a>`;
+                        $('#show-matched-users').append(child);
+                    });
+                });
+            }
+       });
+    </script>
+{% endblock %}

@@ -1,0 +1,63 @@
+.blocked-container {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.blocked-container .title {
+    color: rgb(77, 77, 77);
+    font-size: 1.6rem;
+}
+
+.blocked {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+
+.blocked-container .blocked-card {
+    background-color: rgb(51, 51, 51);
+    width: 200px;
+    height: 250px;
+    margin: 2rem;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+.blocked-container .blocked-card:hover {
+    background-color: rgb(206, 111, 111);
+}
+.blocked-container img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    margin-top: 10px;
+}
+.blocked-container .card-account-name, .card-username {
+    margin-top: 10px;
+    color: rgb(233, 233, 233);
+}
+.blocked-container .card-account-name {
+    margin-top: 20px;
+    font-size: 1.08rem;
+}
+.blocked-container .card-username {
+    font-size: 1.01rem;
+}
+.blocked-container button {
+    background-color: rgb(226, 226, 226);
+    cursor: pointer;
+    border: none; 
+    outline: none;
+    margin-top: 25px;
+    padding: 3px 8px;
+    text-transform: capitalize;
+    border-radius: 3px;
+}
+.blocked-container button:hover {
+    background-color: rgb(73, 73, 73);
+    color: rgb(230, 230, 230);
+}

@@ -1,0 +1,12 @@
+UI
+- Password show/hide icon (using favicon and js)
+- Get the placeholder on top
+
+Backend
+- Pagination
+
+
+DB
+
+Account model (new fields)
+activity_status -> [active, away, busy] -> Datatype: String 
